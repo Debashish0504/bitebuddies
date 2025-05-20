@@ -1,12 +1,13 @@
 import React from 'react'
 import { MagnifyingGlassIcon, UserCircleIcon,MapPinIcon } from '@heroicons/react/24/outline';
+import { LOGO_URL } from '../utils/constants';
 
 function Header() {
   return (
     <div className='bg-white flex items-center justify-between h-24 shadow-lg'>
       <div className="flex items-center p-12">
       <img className = 'h-16 w-16' src =
-      'https://www.shutterstock.com/image-vector/letter-b-logo-symbol-template-260nw-1521105260.jpg'
+      {LOGO_URL}
       />
       <h1 className='text-2xl font-bold'>Bite Buddies</h1>
       <button
