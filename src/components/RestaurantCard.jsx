@@ -1,8 +1,8 @@
 import React from 'react'
 import { CDN_URL, STAR_URL } from '../utils/constants'
 
-function RestaurantCard(props) {
-  const {resData} = props
+function RestaurantCard({resData}) {
+  //const {resData} = props
   const {
     cloudinaryImageId,
     name,

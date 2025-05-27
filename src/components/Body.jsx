@@ -1,28 +1,48 @@
 import React from 'react'
 import RestaurantCard from './RestaurantCard'
 import FestivalScreen from './FestivalScreen'
-import resList from '../utils/mockData'
-import { useState } from 'react'
+import { useState , useEffect } from 'react'
+import axios from 'axios'
 
 
 
 function Body() {
 
-    const [listOfRestaurant, setListOfRestaurant] = useState(resList)
+    const [listOfRestaurant, setListOfRestaurant] = useState([])
 
+    useEffect(() => {
+      
+      fetchData()
+
+    } , [])
+
+    const fetchData = async() => {
+      try {
+        const res = await axios.get('https://cors-anywhere.herokuapp.com/https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.0127127764228&lng=77.6537389308214&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING')
+      console.log(res.data.data);  // logs the second card object
+      const cards = res?.data?.data?.cards;
+
+        const restaurants = res?.data?.data?.cards[1].card.card.gridElements.infoWithStyle.restaurants;
+        console.log('Restaurants:', restaurants);
+        setListOfRestaurant(restaurants)
+      } catch (error) {
+        console.log(error)
+      }
+
+    }
 
 
     let handleOnClick = () => {
         const filterList = listOfRestaurant.filter((res) =>
-            res.info.avgRatingString > 4.2
+            res.info.avgRatingString > 4.3
         )
+        console.log('Restaurants:', filterList.length);
         setListOfRestaurant(filterList)
     }
 
   return (
     <div className='px-2 py-4 '>
-        {/* <h2 className='ml-5 text-2xl font-bold text-black '>Biriyanis</h2>
-        <FestivalScreen userState="Maharashtra" /> */}
+       
     <button className= 'w-50 h-20 ml-4 bg-white border-2 border-gray-500 rounded-2xl text-2xl text-gray-500 font-semibold'
      onClick={handleOnClick}>Top Restaurants</button>
     <div className='flex overflow-auto space-x-4 px-2 py-4'>
