@@ -4,12 +4,15 @@ import FestivalScreen from './FestivalScreen'
 import { useState , useEffect } from 'react'
 import axios from 'axios'
 import Shimmer from './Shimmer'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 
 
 function Body() {
 
     const [listOfRestaurant, setListOfRestaurant] = useState([])
+    const [filteredRestaurant,setFilteredRestaurant] = useState([])
+    const [searchText,setSearchText] = useState("")
 
     useEffect(() => {
       
@@ -26,10 +29,17 @@ function Body() {
         const restaurants = res?.data?.data?.cards[1].card.card.gridElements.infoWithStyle.restaurants;
         console.log('Restaurants:', restaurants);
         setListOfRestaurant(restaurants)
+        setFilteredRestaurant(restaurants)
       } catch (error) {
         console.log(error)
       }
 
+    }
+
+    let handleSearch = () => {
+      const searchFilter = listOfRestaurant.filter((res) => 
+         res.info.name.toLowerCase().includes(searchText.toLowerCase()) )
+      setFilteredRestaurant(searchFilter)
     }
 
 
@@ -37,8 +47,7 @@ function Body() {
         const filterList = listOfRestaurant.filter((res) =>
             res.info.avgRatingString > 4.3
         )
-        console.log('Restaurants:', filterList.length);
-        setListOfRestaurant(filterList)
+        setFilteredRestaurant(filterList)
     }
 
     if(listOfRestaurant.length === 0){
@@ -47,10 +56,27 @@ function Body() {
 
   return (
     <div className='px-2 py-4 '>
-    <button className= 'w-50 h-20 ml-4 bg-white border-2 border-gray-500 rounded-2xl text-2xl text-gray-500 font-semibold'
-     onClick={handleOnClick}>Top Restaurants</button>
+    <div className='flex items-center gap-4 mb-4'>
+    <button
+      className='w-50 h-20 bg-white border-2 border-gray-500 rounded-2xl text-2xl text-gray-500 font-semibold'
+      onClick={ handleOnClick}
+    >
+      Top Restaurants
+    </button>
+
+    <div className='relative'>
+      <input
+        type='text'
+        placeholder='Search your restaurant and food'
+        className='px-4 h-12 w-80 bg-gray-200 text-gray-600 shadow-md rounded-md'
+        value={searchText}
+        onChange={(e) => setSearchText(e.target.value)}
+      />
+      <MagnifyingGlassIcon className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500" width={20} height={20} onClick= {handleSearch}/>
+    </div>
+  </div>
     <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-2 py-4'>
-      {listOfRestaurant.map((restaurant) => <RestaurantCard key ={restaurant.info.id} resData ={restaurant} />)}
+      {filteredRestaurant.map((restaurant) => <RestaurantCard key ={restaurant.info.id} resData ={restaurant} />)}
     </div>
     </div>
   )

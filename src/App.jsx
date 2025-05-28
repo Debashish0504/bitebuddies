@@ -6,7 +6,6 @@ import Body from './components/Body'
 import Sidebar from './components/SideBar'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     
