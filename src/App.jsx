@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import Header from './components/Header'
 import Body from './components/Body'
 import Sidebar from './components/SideBar'
+import { Outlet } from 'react-router-dom'
 
 function App() {
 
@@ -11,7 +12,7 @@ function App() {
     
         <div className='bg-white h-screen'>
         <Header/>  
-        <Body/>   
+        <Outlet/>   
         </div>
    
   )
