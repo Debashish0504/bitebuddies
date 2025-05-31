@@ -5,6 +5,7 @@ import { useState , useEffect } from 'react'
 import axios from 'axios'
 import Shimmer from './Shimmer'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { Link } from 'react-router-dom';
 
 
 
@@ -76,7 +77,7 @@ function Body() {
     </div>
   </div>
     <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-2 py-4'>
-      {filteredRestaurant.map((restaurant) => <RestaurantCard key ={restaurant.info.id} resData ={restaurant} />)}
+      {filteredRestaurant.map((restaurant) => <Link key ={restaurant.info.id} to={'/restaurant/'+ restaurant.info.id}><RestaurantCard  resData ={restaurant} /></Link>)}
     </div>
     </div>
   )
