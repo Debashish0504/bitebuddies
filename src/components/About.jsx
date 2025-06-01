@@ -22,7 +22,7 @@ function About() {
 
     if(userData === null) return <Shimmer/>
 
-    const {name,public_repos,followers,avatar_url} = userData?.data
+    const {login,public_repos,followers,avatar_url} = userData?.data
 
   return (
     <div className="flex flex-col h-screen ">
@@ -30,7 +30,7 @@ function About() {
         <div className=" flex flex-row items-center justify-between shadow-lg rounded-2xl border-2 bg-white w-screen max-w-6xl">
             <div className="flex flex-col">
                  <h1 className="text-2xl ml-4 font-bold text-black ">
-               {userData.login}
+               {login}
          </h1>
           <h3 className="text-2xl ml-4 font-bold text-black ">
                Active Repos: {public_repos}

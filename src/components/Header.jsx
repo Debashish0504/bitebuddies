@@ -2,8 +2,11 @@ import React from 'react'
 import { MagnifyingGlassIcon, UserCircleIcon,MapPinIcon } from '@heroicons/react/24/outline';
 import { LOGO_URL } from '../utils/constants';
 import { Link } from 'react-router-dom';
+import useInternetStatus from '../utils/useInternetStatus';
 
 function Header() {
+
+   const internetStatus = useInternetStatus()
   return (
     <div className='bg-white flex items-center justify-between h-24 shadow-lg'>
       <div className="flex items-center p-12">
@@ -23,6 +26,7 @@ function Header() {
       <div className='flex items-center mr-16'>
         <div className='flex items-center'>
           <ul className="flex space-x-6">
+          <li className='text-black font-semibold text-xl mr-3'>Internet Status : {internetStatus ? "🟢":"🔴"}</li>
           <li className='text-black font-semibold text-xl mr-3'><Link to="/">Home</Link></li>
           <li className='text-black font-semibold text-xl mr-3'><Link to="/about">About Us</Link></li>
           <li className='text-black font-semibold text-xl mr-3'><Link to="/contact">Contact Us</Link></li>

@@ -6,6 +6,8 @@ import axios from 'axios'
 import Shimmer from './Shimmer'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
+import useInternetStatus from '../utils/useInternetStatus'
+import Offline from './Offline'
 
 
 
@@ -14,6 +16,8 @@ function Body() {
     const [listOfRestaurant, setListOfRestaurant] = useState([])
     const [filteredRestaurant,setFilteredRestaurant] = useState([])
     const [searchText,setSearchText] = useState("")
+
+
 
     useEffect(() => {
       
@@ -50,6 +54,10 @@ function Body() {
         )
         setFilteredRestaurant(filterList)
     }
+
+    const internetStatus = useInternetStatus()
+
+    if(internetStatus === false)  return <Offline/>
 
     if(listOfRestaurant.length === 0){
       return <Shimmer/>
