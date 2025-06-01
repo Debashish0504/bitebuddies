@@ -38,7 +38,7 @@ function RestaurantMenu() {
   return (
   <div className="flex flex-col h-screen px-8">
   <div className="flex items-center justify-center mt-8 ">
-  <div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-6xl">
+  <div className="bg-white shadow-lg rounded-xl border-2 border-gray-300 p-6 w-full max-w-6xl">
     <div className="flex flex-row items-center">
       
       <div className="w-1/2 flex flex-col">
