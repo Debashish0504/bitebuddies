@@ -1,5 +1,5 @@
 import React from 'react'
-import RestaurantCard from './RestaurantCard'
+import RestaurantCard , {withPromotedLabel} from './RestaurantCard'
 import FestivalScreen from './FestivalScreen'
 import { useState , useEffect } from 'react'
 import axios from 'axios'
@@ -17,7 +17,7 @@ function Body() {
     const [filteredRestaurant,setFilteredRestaurant] = useState([])
     const [searchText,setSearchText] = useState("")
 
-
+    const RestaurantPromoted = withPromotedLabel(RestaurantCard)
 
     useEffect(() => {
       
@@ -85,7 +85,14 @@ function Body() {
     </div>
   </div>
     <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-2 py-4'>
-      {filteredRestaurant.map((restaurant) => <Link key ={restaurant.info.id} to={'/restaurant/'+ restaurant.info.id}><RestaurantCard  resData ={restaurant} /></Link>)}
+      {filteredRestaurant.map((restaurant) => <Link key ={restaurant.info.id} 
+         to={'/restaurant/'+ restaurant.info.id}>
+         {
+          restaurant?.info?.veg ? <RestaurantPromoted resData={restaurant} /> :
+          <RestaurantCard  resData ={restaurant} />
+         }
+        
+        </Link>)}
     </div>
     </div>
   )

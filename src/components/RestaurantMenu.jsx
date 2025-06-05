@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import Shimmer from './Shimmer'
 import { CDN_URL, STAR_URL } from '../utils/constants'
 import useRestaurant from '../utils/useRestaurant'
+import RestaurantCategory from './RestaurantCategory'
 
 
 function RestaurantMenu() {
@@ -12,13 +13,21 @@ function RestaurantMenu() {
 
   const resInfo = useRestaurant(resId)
 
+  const [selectedIndex,setSelectedIndex] = useState(null)
 
 
   if(resInfo === null) return <Shimmer/>
 
     const {name,costForTwoMessage,avgRating,cuisines,cloudinaryImageId,locality,areaName} = resInfo?.cards[2]?.card?.card?.info
     const {itemCards} = resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card
+    
+    const categories = resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
+      (type) => 
+         type.card?.card?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+      
+    )
 
+    console.log(categories)
 
 
   return (
@@ -53,28 +62,18 @@ function RestaurantMenu() {
   </div>
 </div>
 
-  <div className="flex flex-col items-start mt-8 ">
-        <h1 className="font-bold text-2xl mb-4">Menu</h1>
-        <ul className='w-full'>
-           {itemCards.map(
-            (items,index) => 
-            <li key={items.card.info.id} className='mt-4'>
-                <div className='flex bg-white shadow-lg rounded-xl p-6 w-full justify-between'>
-                    <div className="w-1/2 flex flex-col">
-                    <h2 className='mt-2 mb-2'>{items.card.info.name}</h2>
-                    <h3 className='font-medium'>₹{(items.card.info.price/100) || (items.card.info.finalPrice/100) || (items.card.info.defaultPrice/100) }</h3>
-                    <h3 className='font-normal text-gray-400'>{items.card.info.description}</h3>
-                    </div>
-                
-                 <img
-                    className="w-32 h-32 rounded-2xl object-cover"
-                    alt={name}
-                    src={CDN_URL + items.card.info.imageId}
-                    />
-                </div></li>
-           )
-           }
-        </ul>
+  <div className="flex flex-col  mt-8 items-center justify-center ">
+          <h1 className="font-bold text-2xl mb-4 w-full max-w-6xl ">Menu</h1>
+        {categories.map((category,index) => 
+          <RestaurantCategory key={category?.card?.card?.title} data={category?.card?.card} 
+          arrowStatus={index === selectedIndex}
+          setSelectedIndex={() =>
+            setSelectedIndex(prevIndex => (prevIndex === index ? null : index))
+          }
+            />
+        )}
+        
+        
 
     </div>
 
