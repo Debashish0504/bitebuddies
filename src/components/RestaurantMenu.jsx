@@ -5,6 +5,8 @@ import Shimmer from './Shimmer'
 import { CDN_URL, STAR_URL } from '../utils/constants'
 import useRestaurant from '../utils/useRestaurant'
 import RestaurantCategory from './RestaurantCategory'
+import { useContext } from 'react'
+import UserContext from '../utils/UserContext'
 
 
 function RestaurantMenu() {
@@ -14,6 +16,8 @@ function RestaurantMenu() {
   const resInfo = useRestaurant(resId)
 
   const [selectedIndex,setSelectedIndex] = useState(null)
+
+  const {loggedInUser} = useContext(UserContext)
 
 
   if(resInfo === null) return <Shimmer/>
@@ -64,6 +68,7 @@ function RestaurantMenu() {
 
   <div className="flex flex-col  mt-8 items-center justify-center ">
           <h1 className="font-bold text-2xl mb-4 w-full max-w-6xl ">Menu</h1>
+          <h1 className="font-bold text-2xl mb-4 w-full max-w-6xl ">Welcome {loggedInUser}!!!</h1>
         {categories.map((category,index) => 
           <RestaurantCategory key={category?.card?.card?.title} data={category?.card?.card} 
           arrowStatus={index === selectedIndex}

@@ -1,10 +1,13 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Shimmer from "./Shimmer"
+import UserContext from "../utils/UserContext"
 
 function About() {
 
     const [userData , setUserData] = useState(null)
+
+    const{loggedInUser} = useContext(UserContext)
 
     useEffect(() => {
         fetchUserData()
@@ -26,6 +29,7 @@ function About() {
 
   return (
     <div className="flex flex-col h-screen ">
+          <h1 className="font-bold text-2xl items-center my-4 self-center">Welcome {loggedInUser}!!!</h1>
           <div className="flex items-center justify-center mt-8 ">
         <div className=" flex flex-row items-center justify-between shadow-lg rounded-2xl border-2 bg-white w-screen max-w-6xl">
             <div className="flex flex-col">

@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { MagnifyingGlassIcon, UserCircleIcon,MapPinIcon } from '@heroicons/react/24/outline';
 import { LOGO_URL } from '../utils/constants';
 import { Link } from 'react-router-dom';
 import useInternetStatus from '../utils/useInternetStatus';
+import UserContext from '../utils/UserContext';
 
 function Header() {
+
+  const {loggedInUser} = useContext(UserContext)
 
    const internetStatus = useInternetStatus()
   return (
@@ -40,7 +43,7 @@ function Header() {
         </div>
            
           <UserCircleIcon className = 'h-12 w-12 rounded-full text-gray-600'  />
-          <h2 className='text-black font-semibold text-xl mr-2'>Debashish</h2>
+          <h2 className='text-black font-semibold text-xl mr-2'>{loggedInUser}</h2>
           <button 
           className="flex items-center px-2"
         >

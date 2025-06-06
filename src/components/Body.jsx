@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import RestaurantCard , {withPromotedLabel} from './RestaurantCard'
 import FestivalScreen from './FestivalScreen'
 import { useState , useEffect } from 'react'
@@ -16,6 +16,7 @@ function Body() {
     const [listOfRestaurant, setListOfRestaurant] = useState([])
     const [filteredRestaurant,setFilteredRestaurant] = useState([])
     const [searchText,setSearchText] = useState("")
+
 
     const RestaurantPromoted = withPromotedLabel(RestaurantCard)
 
@@ -81,6 +82,7 @@ function Body() {
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
       />
+    
       <MagnifyingGlassIcon className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500" width={20} height={20} onClick= {handleSearch}/>
     </div>
   </div>
