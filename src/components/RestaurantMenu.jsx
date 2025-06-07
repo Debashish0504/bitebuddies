@@ -7,6 +7,8 @@ import useRestaurant from '../utils/useRestaurant'
 import RestaurantCategory from './RestaurantCategory'
 import { useContext } from 'react'
 import UserContext from '../utils/UserContext'
+import { useDispatch } from 'react-redux'
+import { clearItem } from '../redux/slices/cartSlice'
 
 
 function RestaurantMenu() {
@@ -18,6 +20,12 @@ function RestaurantMenu() {
   const [selectedIndex,setSelectedIndex] = useState(null)
 
   const {loggedInUser} = useContext(UserContext)
+
+  const dispatch = useDispatch()
+
+  const handleClick = () => {
+      dispatch(clearItem())
+  }
 
 
   if(resInfo === null) return <Shimmer/>
@@ -68,7 +76,10 @@ function RestaurantMenu() {
 
   <div className="flex flex-col  mt-8 items-center justify-center ">
           <h1 className="font-bold text-2xl mb-4 w-full max-w-6xl ">Menu</h1>
-          <h1 className="font-bold text-2xl mb-4 w-full max-w-6xl ">Welcome {loggedInUser}!!!</h1>
+          <div className='flex flex-row w-full max-w-6xl justify-between'>
+          <h1 className="font-bold text-2xl mb-4  items-start">Welcome {loggedInUser}!!!</h1>
+          <button className='border-black border-2  text-black rounded-lg w-20' onClick={handleClick}>Clear All</button>
+          </div>
         {categories.map((category,index) => 
           <RestaurantCategory key={category?.card?.card?.title} data={category?.card?.card} 
           arrowStatus={index === selectedIndex}

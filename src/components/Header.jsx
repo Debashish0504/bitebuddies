@@ -4,14 +4,18 @@ import { LOGO_URL } from '../utils/constants';
 import { Link } from 'react-router-dom';
 import useInternetStatus from '../utils/useInternetStatus';
 import UserContext from '../utils/UserContext';
+import { useSelector } from 'react-redux';
 
 function Header() {
+
+  const cartItems = useSelector((store) => store.cart.items)
+  console.log(cartItems)
 
   const {loggedInUser} = useContext(UserContext)
 
    const internetStatus = useInternetStatus()
   return (
-    <div className='bg-white flex items-center justify-between h-24 shadow-lg'>
+    <div className='bg-white flex items-center justify-between h-24 shadow-lg sticky top-0 z-50'>
       <div className="flex items-center p-12">
       <img className = 'h-16 w-16' src =
       {LOGO_URL}
@@ -32,7 +36,7 @@ function Header() {
           <li className='text-black font-semibold text-xl mr-3'>Internet Status : {internetStatus ? "🟢":"🔴"}</li>
           <li className='text-black font-semibold text-xl mr-3'><Link to="/">Home</Link></li>
           <li className='text-black font-semibold text-xl mr-3'><Link to="/about">About Us</Link></li>
-          <li className='text-black font-semibold text-xl mr-3'><Link to="/contact">Contact Us</Link></li>
+          <li className='text-black font-semibold text-xl mr-3'><Link to="/cart">Cart({cartItems.length})items</Link></li>
           </ul>
 
         {/* <input

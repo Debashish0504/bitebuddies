@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 import './index.css'
 import App from './App.jsx'
-import Contact from './components/Contact.jsx'
+import Cart from './components/Cart.jsx'
 import About from './components/About.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import ReactDOM from 'react-dom/client'
@@ -28,8 +28,8 @@ const appRouter = createBrowserRouter([
           element : <Body/>,
         },
         {
-          path: "/contact",
-          element : <Contact/>,
+          path: "/cart",
+          element : <Cart/>,
         },
         {
           path: "/about",

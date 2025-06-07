@@ -8,11 +8,12 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
 import useInternetStatus from '../utils/useInternetStatus'
 import Offline from './Offline'
-
+import {useGetRestaurantsQuery} from "../redux/slices/restaurantSlice"
 
 
 function Body() {
 
+    const {data,error,isLoading} = useGetRestaurantsQuery()
     const [listOfRestaurant, setListOfRestaurant] = useState([])
     const [filteredRestaurant,setFilteredRestaurant] = useState([])
     const [searchText,setSearchText] = useState("")
@@ -22,25 +23,30 @@ function Body() {
 
     useEffect(() => {
       
-      fetchData()
+      if (data) {
+    const restaurants = data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants ;
+    console.log('Restaurants:', data);
+    setListOfRestaurant(restaurants);
+    setFilteredRestaurant(restaurants);
+  }
 
-    } , [])
+    } , [data])
 
-    const fetchData = async() => {
-      try {
-        const res = await axios.get('https://cors-anywhere.herokuapp.com/https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.0127127764228&lng=77.6537389308214&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING')
-      console.log(res.data.data);  // logs the second card object
-      const cards = res?.data?.data?.cards;
+    // const fetchData = async() => {
+    //   try {
+    //     const res = await axios.get('https://cors-anywhere.herokuapp.com/https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.0127127764228&lng=77.6537389308214&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING')
+    //   console.log(res.data.data);  // logs the second card object
+    //   const cards = res?.data?.data?.cards;
 
-        const restaurants = res?.data?.data?.cards[1].card.card.gridElements.infoWithStyle.restaurants;
-        console.log('Restaurants:', restaurants);
-        setListOfRestaurant(restaurants)
-        setFilteredRestaurant(restaurants)
-      } catch (error) {
-        console.log(error)
-      }
+    //     const restaurants = res?.data?.data?.cards[1].card.card.gridElements.infoWithStyle.restaurants;
+    //     console.log('Restaurants:', restaurants);
+    //     setListOfRestaurant(restaurants)
+    //     setFilteredRestaurant(restaurants)
+    //   } catch (error) {
+    //     console.log(error)
+    //   }
 
-    }
+    // }
 
     let handleSearch = () => {
       const searchFilter = listOfRestaurant.filter((res) => 

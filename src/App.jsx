@@ -6,6 +6,8 @@ import Body from './components/Body'
 import Sidebar from './components/SideBar'
 import { Outlet } from 'react-router-dom'
 import UserContext from './utils/UserContext'
+import {Provider} from 'react-redux'
+import appStore from './redux/store'
 
 function App() {
 
@@ -19,12 +21,12 @@ function App() {
   },[])
 
   return (
+        <Provider store={appStore}>
         <UserContext.Provider value={{loggedInUser : username , setUserName}}>
-        <div className='bg-white h-screen'>
         <Header/>  
         <Outlet/>   
-        </div>
         </UserContext.Provider>
+        </Provider>
    
   )
 }
